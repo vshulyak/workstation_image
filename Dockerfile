@@ -44,9 +44,9 @@ RUN /opt/conda/bin/conda env update -f /tmp/root_env.yml && \
     /sbin/setuser jupyter /opt/conda/bin/jupyter nbextension enable execute_time/ExecuteTime && \
     /sbin/setuser jupyter /opt/conda/bin/jupyter nbextension enable toc2/main && \
     /sbin/setuser jupyter /opt/conda/bin/jupyter nbextension enable notify/notify && \
-    /sbin/setuser jupyter /opt/conda/bin/jupyter labextension install @jupyterlab/toc && \
-    /sbin/setuser jupyter /opt/conda/bin/jupyter serverextension enable --py nbresuse && \
-    /sbin/setuser jupyter /opt/conda/bin/jupyter labextension install @jupyterlab/statusbar && \
+    /opt/conda/bin/jupyter labextension install @jupyterlab/toc && \
+    /opt/conda/bin/jupyter serverextension enable --py nbresuse && \
+    /opt/conda/bin/jupyter labextension install @jupyterlab/statusbar && \
     /opt/conda/bin/python -m spacy download en
 
 # Install toree
