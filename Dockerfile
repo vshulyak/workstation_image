@@ -4,6 +4,16 @@ FROM vshulyak/workstation_base:bfad18ea4588a0d5116a2e5dd1a6798c2848d1aa
 # It's imperative that you use squash build as the image is optimized for readability
 #
 
+# Build-time metadata as defined at http://label-schema.org
+ARG BUILD_DATE
+ARG VCS_REF
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="Workstation Image" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/vshulyak/workstation_image" \
+      org.label-schema.schema-version="1.0"
+
+
 RUN useradd -m jupyter && \
     mkdir /mnt/notebooks && chown jupyter:jupyter /mnt/notebooks && \
     mkdir /mnt/data && chown jupyter:jupyter /mnt/data && \
@@ -18,6 +28,9 @@ RUN useradd -m jupyter && \
     chown -R jupyter:jupyter /home/jupyter/.ipython
 
 
+#
+# Spark + Almond
+#
 ENV SPARK_DOWNLOAD_URL=http://mirror.linux-ia64.org/apache/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz \
     SPARK_HOME=/usr/lib/spark \
     SCALA_VERSION=2.12.8 \
@@ -26,11 +39,12 @@ ENV SPARK_DOWNLOAD_URL=http://mirror.linux-ia64.org/apache/spark/spark-2.4.0/spa
 RUN mkdir /usr/lib/spark && \
     wget -qO - ${SPARK_DOWNLOAD_URL} | tar -xz -C $SPARK_HOME --strip-components 1 && \
     curl -L -o /usr/bin/coursier https://git.io/coursier &&     chmod +x /usr/bin/coursier && \
-    coursier bootstrap -r jitpack -i user -I user:sh.almond:scala-kernel-api_$SCALA_VERSION:$ALMOND_VERSION  sh.almond:scala-kernel_$SCALA_VERSION:$ALMOND_VERSION  --sources --default=true -o /usr/bin/almond && \
-    /usr/bin/almond --install
+    coursier bootstrap -r jitpack -i user -I user:sh.almond:scala-kernel-api_$SCALA_VERSION:$ALMOND_VERSION  sh.almond:scala-kernel_$SCALA_VERSION:$ALMOND_VERSION  --sources --default=true -o /usr/bin/almond
 
+#
 # Install inline dependencies, which are referenced here in the Dockerfile and/or have custome setup.
-# Putting them here, rather than in the conda env file makes the whole process clear.
+#   (Putting them here, rather than in the conda env file makes the whole process clear)
+#
 ENV DOCKERFILE_PYTHON_DEPS="toree==0.3.0 nbresuse line-profiler psutil memory_profiler lazy-object-proxy==1.3.1 findspark==1.1.0"
 
 # Update anaconda deps
@@ -49,15 +63,17 @@ RUN /opt/conda/bin/conda env update -f /tmp/root_env.yml && \
     /opt/conda/bin/jupyter labextension install @jupyterlab/statusbar && \
     /opt/conda/bin/python -m spacy download en
 
-# Install toree
-RUN /opt/conda/bin/jupyter toree install --replace --spark_home=$SPARK_HOME --spark_opts="--master=local[*]"
+# Install Scala-related kernels: toree & almond. They have to be installed after Jupyter.
+RUN /opt/conda/bin/jupyter toree install --replace --spark_home=$SPARK_HOME --spark_opts="--master=local[*]" && \
+    /usr/bin/almond --install
 
 # Override Tensorflow, so that we have a custom & optimized version
 RUN /opt/conda/bin/pip install --upgrade https://github.com/vshulyak/docker-tensorflow-builder/releases/download/v1.12.0cpu-1/tensorflow-1.12.0-cp36-cp36m-linux_x86_64.whl
 
 # Cleanup
 RUN /opt/conda/bin/conda clean --all -y && \
-    rm -rf /opt/conda/pkgs
+    rm -rf /opt/conda/pkgs && \
+    rm -rf /root/.cache
 
 # Configure profiles
 COPY conf/jupyter/ipython_config.py /home/jupyter/.ipython/profile_default/ipython_config.py
