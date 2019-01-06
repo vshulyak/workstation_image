@@ -1,0 +1,24 @@
+version: 2
+jobs:
+  build:
+    machine:
+      docker_layer_caching: true
+    steps:
+     - checkout
+     - run:
+         name: set docker daemon to experimental
+         command: |
+              sudo sh -c 'echo '\''DOCKER_OPTS="--experimental=true"'\'' >> /etc/default/docker'
+              sudo service docker restart
+     - run: |
+         docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+     - run: >
+         docker build --squash
+         --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
+         --build-arg VCS_REF=`git rev-parse --short HEAD`
+         -t $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest .
+
+     - run: docker tag $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1
+     - run: docker push $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1
+     - run: docker push $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest
