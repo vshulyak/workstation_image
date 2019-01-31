@@ -114,7 +114,7 @@ dependencies:
     - influxdb==5.2.*
     - git+https://github.com/javiljoen/lttb.py.git
     - https://github.com/vshulyak/docker-tensorflow-builder/releases/download/v1.12.0cpu-1/tensorflow-1.12.0-cp36-cp36m-linux_x86_64.whl
-    - einsum
+    - einops
     - git+https://github.com/hyperopt/hyperopt.git@f3f6e520772bbfa807b5495fbfe4a0c0f409d8fa
     - ray[debug]
     - git+https://github.com/vshulyak/loop@9d3833231ed48e08b0792cd045d7036505c782ed
