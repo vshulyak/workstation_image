@@ -81,7 +81,7 @@ dependencies:
     - fancyimpute
     - pandas-profiling
     - missingno
-    - fitter
+    - fitter==1.0.9
     - hyperopt
     - markovify
     - zarr==2.2.0rc1
