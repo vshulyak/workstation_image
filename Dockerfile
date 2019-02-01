@@ -93,7 +93,8 @@ COPY services/run_mount_notebooks.sh /etc/service/mount_notebooks/run
 COPY services/run_tensorboard.sh /etc/service/tensorboard/run
 
 COPY conf/conda/keras.json /home/jupyter/.keras/keras.json
-COPY conf/jupyter/jupyter_notebook_config.py /home/jupyter/.jupyter/jupyter_notebook_config.py
+COPY conf/jupyter/jupyter_default_notebook_config.py /home/jupyter/.jupyter/jupyter_notebook_config.py
+COPY conf/jupyter/jupyter_custom_notebook_config.py /home/jupyter/.jupyter/jupyter_custom_notebook_config.py
 
 RUN chmod 755 /etc/service/jupyter/run && \
     chmod 755 /etc/service/mlflow/run && \
