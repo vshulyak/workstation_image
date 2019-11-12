@@ -6,27 +6,34 @@ channels:
   - conda-forge
   - pytorch
   - maciejkula
+  - r
+  - teamcore
 dependencies:
-  - python=3.6.8
+  - r-forecast
+  - r-devtools
+  - r-mapa
+  - r-smooth
+  - r-greybox
+  - python=3.7.5
   - mkl=2019.1
-  - numpy
-  - pandas=0.23.*
   - pillow
   - scikit-learn
   - seaborn
   - xgboost
-  - keras=2.2.*
-  - pymc3=3.6
-  - pytorch=1.0.*
-  - torchvision=0.2.*
+  - pymc3=3.7
+  - pytorch=1.3.*
+  - torchvision=0.4.*
   - widgetsnbextension
   - tqdm
   - statsmodels
   - pygpu
-  - numpy
-  - Cython
+  - Cython>=0.29
   - jupyterlab
+  - zarr
   - pip:
+    - numpy==1.17.*
+    - pandas==0.25.*
+    - keras==2.3.*
     - html5lib
     - arrow
     - h2o
@@ -34,29 +41,27 @@ dependencies:
     - ipykernel
     - networkx
     - boto3
-    - python-louvain==0.13
-    - imbalanced-learn==0.4.*
-    - yellowbrick==0.*
-    - s3fs==0.1.*
-    - wurlitzer==1.0.0
-    - pyarrow==0.9.*
+    - python-louvain
+    - imbalanced-learn
+    - yellowbrick
+    - s3fs
+    - wurlitzer==2.0.0
+    - pyarrow==0.15.*
     - feather-format==0.4.*
-    - dask==0.18.*
-    - distributed==1.22.*
+    - dask==2.7.*
+    - distributed
     - knit==0.2.*
-    - lifelines==0.12.*
+    - lifelines==0.22.*
     - bcolz==1.2.*
-    - Boruta==0.1.*
-    - tables==3.4.*
-    - awscli==1.14.*
-    - s3contents==0.1.*
-    - jupyter_contrib_nbextensions==0.4.*
+    - Boruta==0.3.*
+    - tables==3.6.*
+    - awscli
+    - s3contents
+    - jupyter_contrib_nbextensions==0.5.*
     - pandas_summary
     - sklearn_pandas
-    - kaggle-cli
     - ipywidgets
     - pdpbox
-    - sklearn-contrib-lightning
     - vecstack
     - mlens
     - heamy
@@ -68,11 +73,9 @@ dependencies:
     - fbpca
     - polyglot
     - kmodes
-    - kmeans-smote
     - scikit-plot
     - paramnb
     - lightfm
-    - fastFM
     - speedml
     - sklearn-pandas
     - bayespy
@@ -81,21 +84,18 @@ dependencies:
     - fancyimpute
     - pandas-profiling
     - missingno
-    - fitter==1.0.9
+    - fitter
     - hyperopt
     - markovify
-    - zarr==2.2.0rc1
-    - spacy==2.0.*
-    - scikit-surprise==1.0.*
-    - featuretools==0.2.*
+    - spacy
+    - featuretools
     - pyspark==2.4.*
     - gensim
     - pymorphy2
     - langdetect
     - sqlalchemy
-    - psycopg2
+    - psycopg2-binary
     - nltk
-    - keras-tqdm
     - pydot
     - graphviz
     - isoweek
@@ -104,18 +104,23 @@ dependencies:
     - lightgbm
     - terminaltables
     - seasonal
-    - stldecompose==0.0.*
+    - stldecompose
     - fbprophet
     - python-dotenv
-    - torchsummary==1.5.*
-    - pytorch-ignite==0.1.*
-    - mlflow==0.8.*
-    - arch==4.7.*
+    - torchsummary
+    - pytorch-ignite
+    - mlflow==1.4.*
+    - arch==4.10.*
     - influxdb==5.2.*
     - git+https://github.com/javiljoen/lttb.py.git
-    - https://github.com/vshulyak/docker-tensorflow-builder/releases/download/v1.12.0cpu-1/tensorflow-1.12.0-cp36-cp36m-linux_x86_64.whl
+    - tensorflow==2.*
     - einops
-    - git+https://github.com/hyperopt/hyperopt.git@f3f6e520772bbfa807b5495fbfe4a0c0f409d8fa
     - ray[debug]
     - git+https://github.com/vshulyak/loop@9d3833231ed48e08b0792cd045d7036505c782ed
-    - keras-lr-finder
+    - holidays
+    - catalyst
+    - perfplot
+    - torchviz
+    - engarde
+    - rpy2
+    - dill
