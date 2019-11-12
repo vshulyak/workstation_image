@@ -6,3 +6,20 @@
 The Docker image with the Jupyter environment setup, with all Data Science libs baked in.
 
 A component of [Workstation](https://github.com/vshulyak/workstation).
+
+TODO:
+* make mlflow to run in a separate container
+* make optuna to run in a separate container
+
+TOADD:
+* Hinterland jupyter extension
+
+
+Unused:
+- keras-tqdm
+- keras-lr-finder
+- sklearn-contrib-lightning
+- kmeans-smote
+- fastFM  – fails to build for py37
+- scikit-surprise==1.1.*
+- kaggle-cli
