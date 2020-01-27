@@ -22,7 +22,7 @@ dependencies:
   - xgboost
   - pymc3=3.7
   - pytorch=1.4.*
-  - torchvision=0.4.*
+  - torchvision
   - widgetsnbextension
   - tqdm
   - statsmodels
