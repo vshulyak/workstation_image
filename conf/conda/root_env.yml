@@ -21,7 +21,7 @@ dependencies:
   - seaborn
   - xgboost
   - pymc3=3.7
-  - torch=1.4.*
+  - pytorch=1.4.*
   - torchvision=0.4.*
   - widgetsnbextension
   - tqdm
